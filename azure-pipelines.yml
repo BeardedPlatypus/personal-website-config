@@ -31,3 +31,24 @@ steps:
 - script: |
     npm install
   displayName: 'npm install'
+
+- script: |
+    git clone https://github.com/BeardedPlatypus/rubber-squid.git theme
+  displayName: 'Check out - Rubber Squid theme'
+
+- script: |
+    git clone https://github.com/BeardedPlatypus/personal-website-content.git content
+  displayName: 'Check out - Blog Content'
+
+- script: |
+    gulp prePelican
+  displayName: 'Pre-Pelican Compile'
+
+- script: |
+    pelican content -s publishconf.py
+  displayName: 'Pelican Compile'
+
+- script: |
+    gulp postPelican
+  displayName: 'Post-Pelican Compile'
+  
