@@ -5,7 +5,6 @@ var useref = require('gulp-useref');
 var cssnano = require('gulp-cssnano');
 var gulpIf = require('gulp-if');
 var promisedDel = require('promised-del');
-var runSequence = require('run-sequence');
 
 
 var themePath = path.join('theme', 'rubber-squid');
