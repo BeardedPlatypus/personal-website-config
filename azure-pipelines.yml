@@ -13,9 +13,6 @@ strategy:
       python.version: '3.7'
 
 steps:
-- checkout: self
-  persistCredentials: true
-
 - task: UsePythonVersion@0
   inputs:
     versionSpec: '$(python.version)'
@@ -36,12 +33,18 @@ steps:
   displayName: 'npm install'
 
 - script: |
-    git clone https://github.com/BeardedPlatypus/rubber-squid.git theme
+    git clone https://$env:GITHUB_ACCOUNT:$env:GITHUB_PW@github.com/BeardedPlatypus/rubber-squid.git theme
   displayName: 'Check out - Rubber Squid theme'
-
+  env:
+    GITHUB_ACCOUNT: $(github.profile)
+    GITHUB_PW: $(github.password)
+    
 - script: |
-    git clone https://github.com/BeardedPlatypus/personal-website-content.git content
+    git clone https://$env:GITHUB_ACCOUNT:$env:GITHUB_PW@github.com/BeardedPlatypus/personal-website-content.git content
   displayName: 'Check out - Blog Content'
+  env:
+    GITHUB_ACCOUNT: $(github.profile)
+    GITHUB_PW: $(github.password)
 
 - script: |
     gulp prePelican
