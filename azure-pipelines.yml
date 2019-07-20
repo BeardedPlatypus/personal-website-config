@@ -75,7 +75,34 @@ steps:
     gulp postPelican
   displayName: 'Post-Pelican Compile'
 
+- task: CopyFiles@2
+  inputs:
+    contents: 'website_dist/**'
+    targetFolder: $(Build.ArtifactStagingDirectory)
+  displayName: 'Artifacts - Copy'
+
+- task: CopyFiles@2
+  inputs:
+    contents: 'theme/**'
+    targetFolder: $(Build.ArtifactStagingDirectory)
+  displayName: 'Artifacts - Copy theme'
+
+- task: CopyFiles@2
+  inputs:
+    contents: 'production/**'
+    targetFolder: $(Build.ArtifactStagingDirectory)
+  displayName: 'Artifacts - Copy prod'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: $(Build.ArtifactStagingDirectory)
+    artifactName: websiteContents
+  displayName: 'Artifacts - Publish'
+
 - powershell: |
+    git config user.email "$env:USER_EMAIL"
+    git config user.name "$env:USER_NAME"
+
     git add *
     git commit -m "Automated update: $(Build.BuildNumber)"
 
@@ -91,3 +118,5 @@ steps:
   env:
     GITHUB_ACCOUNT: $(github.profile)
     GITHUB_PW: $(github.password)
+    USER_NAME: $(user.name)
+    USER_EMAIL: $(user.email)
