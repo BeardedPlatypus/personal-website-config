@@ -79,11 +79,19 @@ steps:
   inputs:
     contents: 'website_dist/**'
     targetFolder: $(Build.ArtifactStagingDirectory)
+  displayName: 'Artifacts - Copy'
+
+- task: CopyFiles@2
+  inputs:
+    contents: 'theme/**'
+    targetFolder: $(Build.ArtifactStagingDirectory)
+  displayName: 'Artifacts - Copy theme'
 
 - task: PublishBuildArtifacts@1
   inputs:
     pathToPublish: $(Build.ArtifactStagingDirectory)
     artifactName: websiteContents
+  displayName: 'Artifacts - Publish'
 
 - powershell: |
     git config user.email "$env:USER_EMAIL"
