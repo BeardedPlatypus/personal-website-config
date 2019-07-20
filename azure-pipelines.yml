@@ -13,6 +13,25 @@ strategy:
       python.version: '3.7'
 
 steps:
+- powershell: |
+    $url = "github.com/BeardedPlatypus/rubber-squid.git"
+    $url = ":$env:GITHUB_PW@$url"
+    $url = "$env:GITHUB_ACCOUNT$url"
+    $url = "https://$url"
+
+    git clone $url theme
+  displayName: 'Check out - Rubber Squid theme'
+  env:
+    GITHUB_ACCOUNT: $(github.profile)
+    GITHUB_PW: $(github.password)
+    
+- script: |
+    git clone "https://$env:GITHUB_ACCOUNT:$env:GITHUB_PW@github.com/BeardedPlatypus/personal-website-content.git" content
+  displayName: 'Check out - Blog Content'
+  env:
+    GITHUB_ACCOUNT: $(github.profile)
+    GITHUB_PW: $(github.password)
+
 - task: UsePythonVersion@0
   inputs:
     versionSpec: '$(python.version)'
@@ -31,23 +50,6 @@ steps:
 - script: |
     npm install
   displayName: 'npm install'
-
-- powershell: |
-    $url = "github.com/BeardedPlatypus/rubber-squid.git"
-    $url = "$env:GITHUB_ACCOUNT:$env:GITHUB_PW@$url"
-
-    git clone $url theme
-  displayName: 'Check out - Rubber Squid theme'
-  env:
-    GITHUB_ACCOUNT: $(github.profile)
-    GITHUB_PW: $(github.password)
-    
-- script: |
-    git clone "https://$env:GITHUB_ACCOUNT:$env:GITHUB_PW@github.com/BeardedPlatypus/personal-website-content.git" content
-  displayName: 'Check out - Blog Content'
-  env:
-    GITHUB_ACCOUNT: $(github.profile)
-    GITHUB_PW: $(github.password)
 
 - script: |
     gulp prePelican
