@@ -82,7 +82,7 @@ steps:
     git push $url master    
 
   displayName: 'Update BeardedPlatypus.io'
-  workingDirectory: dist
+  workingDirectory: website_dist
   env:
     GITHUB_ACCOUNT: $(github.profile)
     GITHUB_PW: $(github.password)
