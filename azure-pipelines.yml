@@ -13,8 +13,9 @@ strategy:
       python.version: '3.7'
 
 steps:
-- script: |
-    git clone "https://$env:GITHUB_ACCOUNT:$env:GITHUB_PW@github.com/BeardedPlatypus/rubber-squid.git" theme
+- powershell: |
+    $url = "https://$env:GITHUB_ACCOUNT:$env:GITHUB_PW@github.com/BeardedPlatypus/rubber-squid.git"
+    git clone $url theme
   displayName: 'Check out - Rubber Squid theme'
   env:
     GITHUB_ACCOUNT: $(github.profile)
