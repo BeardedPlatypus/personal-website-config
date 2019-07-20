@@ -87,6 +87,12 @@ steps:
     targetFolder: $(Build.ArtifactStagingDirectory)
   displayName: 'Artifacts - Copy theme'
 
+- task: CopyFiles@2
+  inputs:
+    contents: 'production/**'
+    targetFolder: $(Build.ArtifactStagingDirectory)
+  displayName: 'Artifacts - Copy prod'
+
 - task: PublishBuildArtifacts@1
   inputs:
     pathToPublish: $(Build.ArtifactStagingDirectory)
