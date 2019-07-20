@@ -76,6 +76,9 @@ steps:
   displayName: 'Post-Pelican Compile'
 
 - powershell: |
+    git config user.email "$env:USER_EMAIL"
+    git config user.name "$env:USER_NAME"
+
     git add *
     git commit -m "Automated update: $(Build.BuildNumber)"
 
@@ -91,3 +94,5 @@ steps:
   env:
     GITHUB_ACCOUNT: $(github.profile)
     GITHUB_PW: $(github.password)
+    USER_NAME: $(user.name)
+    USER_EMAIL: $(user.email)
