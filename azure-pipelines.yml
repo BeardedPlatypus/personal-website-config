@@ -39,7 +39,7 @@ steps:
 
 - powershell: |
     git clone --no-checkout "https://github.com/BeardedPlatypus/BeardedPlatypus.github.io" website_dist
-  displayName: 'Check out - Blog Content'
+  displayName: 'Check out - BeardedPlatypus.io'
   env:
     GITHUB_ACCOUNT: $(github.profile)
     GITHUB_PW: $(github.password)
