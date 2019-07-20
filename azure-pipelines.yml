@@ -19,7 +19,7 @@ steps:
     $url = "$env:GITHUB_ACCOUNT$url"
     $url = "https://$url"
 
-    git clone $url "theme\\rubber-squid"
+    git clone $url "theme/rubber-squid"
   displayName: 'Check out - Rubber Squid Theme'
   env:
     GITHUB_ACCOUNT: $(github.profile)
