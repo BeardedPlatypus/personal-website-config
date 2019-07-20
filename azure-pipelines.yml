@@ -14,15 +14,24 @@ strategy:
 
 steps:
 - powershell: |
-    $url = "https://$env:GITHUB_ACCOUNT:$env:GITHUB_PW@github.com/BeardedPlatypus/rubber-squid.git"
+    $url = "github.com/BeardedPlatypus/rubber-squid.git"
+    $url = ":$env:GITHUB_PW@$url"
+    $url = "$env:GITHUB_ACCOUNT$url"
+    $url = "https://$url"
+
     git clone $url theme
-  displayName: 'Check out - Rubber Squid theme'
+  displayName: 'Check out - Rubber Squid "theme\\rubber-squid"'
   env:
     GITHUB_ACCOUNT: $(github.profile)
     GITHUB_PW: $(github.password)
-    
-- script: |
-    git clone "https://$env:GITHUB_ACCOUNT:$env:GITHUB_PW@github.com/BeardedPlatypus/personal-website-content.git" content
+
+- powershell: |
+    $url = "github.com/BeardedPlatypus/personal-website-content.git"
+    $url = ":$env:GITHUB_PW@$url"
+    $url = "$env:GITHUB_ACCOUNT$url"
+    $url = "https://$url"
+
+    git clone $url content
   displayName: 'Check out - Blog Content'
   env:
     GITHUB_ACCOUNT: $(github.profile)
