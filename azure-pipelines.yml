@@ -64,6 +64,37 @@ steps:
     pelican content -s publishconf.py
   displayName: 'Pelican Compile'
 
+- powershell: |
+    $url = "github.com/BeardedPlatypus/rubber-squid.git"
+    $url = ":$env:GITHUB_PW@$url"
+    $url = "$env:GITHUB_ACCOUNT$url"
+    $url = "https://$url"
+
+    git clone $url "theme/rubber-squid"
+  displayName: 'Check out - Rubber Squid Theme'
+  env:
+    GITHUB_ACCOUNT: $(github.profile)
+    GITHUB_PW: $(github.password)
+
 - script: |
     gulp postPelican
   displayName: 'Post-Pelican Compile'
+
+- powershell: |
+    git clone --no-checkout "https://github.com/BeardedPlatypus/BeardedPlatypus.github.io"
+    git rm -r --cached .
+    git add .
+    git commit -m "Automated update: $(Build.BuildNumber)"
+
+    $url = "github.com/BeardedPlatypus/BeardedPlatypus.github.io.git"
+    $url = ":$env:GITHUB_PW@$url"
+    $url = "$env:GITHUB_ACCOUNT$url"
+    $url = "https://$url"
+
+    git push $url master    
+
+  displayName: 'Update BeardedPlatypus.io'
+  workingDirectory: dist
+  env:
+    GITHUB_ACCOUNT: $(github.profile)
+    GITHUB_PW: $(github.password)
