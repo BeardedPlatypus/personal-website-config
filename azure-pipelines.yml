@@ -37,6 +37,13 @@ steps:
     GITHUB_ACCOUNT: $(github.profile)
     GITHUB_PW: $(github.password)
 
+- powershell: |
+    git clone --no-checkout "https://github.com/BeardedPlatypus/BeardedPlatypus.github.io" website_dist
+  displayName: 'Check out - Blog Content'
+  env:
+    GITHUB_ACCOUNT: $(github.profile)
+    GITHUB_PW: $(github.password)
+
 - task: UsePythonVersion@0
   inputs:
     versionSpec: '$(python.version)'
@@ -69,11 +76,6 @@ steps:
   displayName: 'Post-Pelican Compile'
 
 - powershell: |
-    $temp = "temp"
-    git clone --no-checkout "https://github.com/BeardedPlatypus/BeardedPlatypus.github.io" $temp
-    mv $temp/.git .
-    rm $temp
-
     git add *
     git commit -m "Automated update: $(Build.BuildNumber)"
 
