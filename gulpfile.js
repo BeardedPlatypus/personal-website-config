@@ -59,6 +59,6 @@ gulp.task('prePelican', gulp.series('sass', function(done) {
 }));
 
 
-gulp.task('postPelican', gulp.series('clean:dist', 'useref', 'js', 'feeds', function(done) {
+gulp.task('postPelican', gulp.series('useref', 'js', 'feeds', function(done) {
     done();
 }));
