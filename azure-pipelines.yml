@@ -64,18 +64,6 @@ steps:
     pelican content -s publishconf.py
   displayName: 'Pelican Compile'
 
-- powershell: |
-    $url = "github.com/BeardedPlatypus/rubber-squid.git"
-    $url = ":$env:GITHUB_PW@$url"
-    $url = "$env:GITHUB_ACCOUNT$url"
-    $url = "https://$url"
-
-    git clone $url "theme/rubber-squid"
-  displayName: 'Check out - Rubber Squid Theme'
-  env:
-    GITHUB_ACCOUNT: $(github.profile)
-    GITHUB_PW: $(github.password)
-
 - script: |
     gulp postPelican
   displayName: 'Post-Pelican Compile'
