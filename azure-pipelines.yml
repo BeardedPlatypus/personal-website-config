@@ -33,7 +33,11 @@ steps:
   displayName: 'npm install'
 
 - script: |
-    git clone "https://$env:GITHUB_ACCOUNT:$env:GITHUB_PW@github.com/BeardedPlatypus/rubber-squid.git" theme
+    $url = "github.com/BeardedPlatypus/rubber-squid.git"
+    $url = ":$env:GITHUB_PW@$url"
+    $url = "$env:GITHUB_ACCOUNT$url"
+
+    git clone $url theme
   displayName: 'Check out - Rubber Squid theme'
   env:
     GITHUB_ACCOUNT: $(github.profile)
