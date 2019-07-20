@@ -71,7 +71,7 @@ steps:
 - powershell: |
     $temp = "temp"
     git clone --no-checkout "https://github.com/BeardedPlatypus/BeardedPlatypus.github.io" $temp
-    mv $temp\.git .
+    mv $temp/.git .
     rm $temp
 
     git add *
