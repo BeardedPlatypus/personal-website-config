@@ -69,9 +69,12 @@ steps:
   displayName: 'Post-Pelican Compile'
 
 - powershell: |
-    git clone --no-checkout "https://github.com/BeardedPlatypus/BeardedPlatypus.github.io"
-    git rm -r --cached .
-    git add .
+    $temp = "temp"
+    git clone --no-checkout "https://github.com/BeardedPlatypus/BeardedPlatypus.github.io" $temp
+    mv $temp\.git .
+    rm $temp
+
+    git add *
     git commit -m "Automated update: $(Build.BuildNumber)"
 
     $url = "github.com/BeardedPlatypus/BeardedPlatypus.github.io.git"
@@ -79,7 +82,7 @@ steps:
     $url = "$env:GITHUB_ACCOUNT$url"
     $url = "https://$url"
 
-    git push $url master    
+    git push $url master
 
   displayName: 'Update BeardedPlatypus.io'
   workingDirectory: website_dist
